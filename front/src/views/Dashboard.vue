@@ -1064,12 +1064,30 @@
       </div>
    </div>
 </template>
+
 <style>
 @import "../assets/css/style.css";
 </style>
 <script>
+import {useStore} from "vuex";
+import {computed} from "vue";
+import {useRouter} from "vue-router";
 export default {
    name: "dashboard",
-   setup() {},
+   setup() {
+      const store = useStore();
+      const router = useRouter();
+
+      function logout() {
+         store.commit("logout");
+         router.push({
+            name: "Login",
+         });
+      }
+      return {
+         user: computed(() => store.state.user.data),
+         logout,
+      };
+   },
 };
 </script>
