@@ -27,7 +27,7 @@
                                        type="text"
                                        id="form3Example1c"
                                        class="form-control"
-                                       v-model="user.full_name"
+                                       v-model="user.name"
                                     />
                                     <label
                                        class="form-label"
@@ -147,17 +147,19 @@ import store from "../store";
 
 const router = useRouter();
 const user = {
-   full_name: "",
+   name: "",
    email: "",
    password: "",
    password_confirmation: "",
 };
 function register(ev) {
    ev.preventDefault();
+   console.log("test");
    store.dispatch("register", user).then((res) => {
-      router.push({
-         name: "Dashboard",
-      });
+      // router.push({
+      //    name: "Dashboard",
+      // });
+      console.log(res);
    });
 }
 </script>

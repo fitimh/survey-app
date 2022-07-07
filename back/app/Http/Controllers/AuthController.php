@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -16,10 +17,9 @@ class AuthController extends Controller
         $v = Validator::make($request->all(), [
             'name' => 'required|min:3|',
             'email' => 'required|email|unique:users',
-            'password'=>'required|min:3|confirmed',
+            'password' => 'required|min:3|confirmed',
         ]);
-        if ($v->fails())
-        {
+        if ($v->fails()) {
             return response()->json([
                 'status' => 'error',
                 'errors' => $v->errors()
@@ -29,18 +29,25 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
 
-//      $user->password=Hash::make($request->password);
+        //      $user->password=Hash::make($request->password);
         $user->password = bcrypt($request->password);
         $user->save();
-        return response()->json(['status' => 'success'], 200);
+        $token = $user->createToken('main')->plainTextToken;
+
+        // return response()->json(['status' => 'success'], 200);
+        return response([
+            'user' => $user,
+            'token' => $token
+        ]);
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         // Check email
         $user = User::where('email', $request['email'])->first();
 
         // Check password
-        if(!$user || !Hash::check($request['password'], $user->password)) {
+        if (!$user || !Hash::check($request['password'], $user->password)) {
             return response()->json(['error' => "Email and password combination doesn't match"], 401);
         }
 
@@ -53,14 +60,14 @@ class AuthController extends Controller
         return response()->json(['data' => $response, 'success' => "Successfully Logged in!"]);
     }
 
-//    public function login(Request $request)
-//    {
-//        $credentials = $request->only('email', 'password');
-//        if ($token = $this->guard()->attempt($credentials)) {
-//            return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
-//        }
-//        return response()->json(['error' => 'login_error'], 401);
-//    }
+    //    public function login(Request $request)
+    //    {
+    //        $credentials = $request->only('email', 'password');
+    //        if ($token = $this->guard()->attempt($credentials)) {
+    //            return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+    //        }
+    //        return response()->json(['error' => 'login_error'], 401);
+    //    }
 
     public function logout()
     {
@@ -93,5 +100,4 @@ class AuthController extends Controller
     {
         return Auth::guard();
     }
-
 }
