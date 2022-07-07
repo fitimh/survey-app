@@ -8,9 +8,9 @@ const store = createStore({
       },
    },
    getters: {},
-   action: {
+   actions: {
       register({commit}, user) {
-         return fetch(`http://localhost:8000/api/register`, {
+         return fetch(`http://localhost:8000/api/auth/register`, {
             headers: {
                "Content-Type": "application/json",
                Accpect: "application/json",
