@@ -1,3 +1,3 @@
-<template src="./Login.html" />
-<style scoped src="./Login.css" />
-<script src="./Login.js" />
+<template src="./Login.html"></template>
+<style scoped src="./Login.css"></style>
+<script src="./Login.js"></script>

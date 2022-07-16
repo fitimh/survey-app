@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>Login</div>
 </template>
 <style scoped>
@@ -11,4 +11,4 @@ export default {
         
     },
 }
-</script>
+</script> -->
