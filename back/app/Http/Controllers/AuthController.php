@@ -43,14 +43,15 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // Check email
+        //is for check email
         $user = User::where('email', $request['email'])->first();
 
-        // Check password
-        if (!$user || !Hash::check($request['password'], $user->password)) {
+
+        //is for check password
+
+        if ($user || !Hash::check($request['password'], $user->password)) {
             return response()->json(['error' => "Email and password combination doesn't match"], 401);
         }
-
         $token = $user->createToken('myapptoken')->plainTextToken;
 
         $response = [
@@ -60,14 +61,6 @@ class AuthController extends Controller
         return response()->json(['data' => $response, 'success' => "Successfully Logged in!"]);
     }
 
-    //    public function login(Request $request)
-    //    {
-    //        $credentials = $request->only('email', 'password');
-    //        if ($token = $this->guard()->attempt($credentials)) {
-    //            return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
-    //        }
-    //        return response()->json(['error' => 'login_error'], 401);
-    //    }
 
     public function logout()
     {
