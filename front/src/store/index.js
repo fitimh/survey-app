@@ -1,4 +1,5 @@
 import {createStore} from "vuex";
+import httpAxios from "../utils/httpAxios";
 
 const store = createStore({
    state: {
@@ -10,19 +11,16 @@ const store = createStore({
    getters: {},
    actions: {
       register({commit}, user) {
-         return fetch(`http://localhost:8000/api/auth/register`, {
-            headers: {
-               "Content-Type": "application/json",
-               Accpect: "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify(user),
-         })
-            .then((response) => response.json())
-            .then((response) => {
-               commit("setUser", response);
-               return response;
-            });
+         return httpAxios.post("/auth/register", user).then(({data}) => {
+            commit("setUser", data);
+            return data;
+         });
+      },
+      login({commit}, user) {
+         return httpAxios.post("/auth/login", user).then(({data}) => {
+            commit("setUser", data);
+            return data;
+         });
       },
    },
    mutations: {

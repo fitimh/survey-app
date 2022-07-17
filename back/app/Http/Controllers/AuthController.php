@@ -40,36 +40,52 @@ class AuthController extends Controller
             'token' => $token
         ]);
     }
-
     public function login(Request $request)
     {
-        //is for check email
-        $user = User::where('email', $request['email'])->first();
+        $credentials = $request->validate([
+
+            'email' => 'required|email|string|exists:users,email',
+            'password' => [
+                'required'
+            ],
+            'remember' => 'boolean'
 
 
-        //is for check password
+        ]);
 
-        if ($user || !Hash::check($request['password'], $user->password)) {
-            return response()->json(['error' => "Email and password combination doesn't match"], 401);
+        $remember = $credentials['remember'] ?? false;
+        unset($credentials['remember']);
+
+
+        if (!Auth::attempt($credentials, $remember)) {
+            return response([
+                'error' => 'The Provided credentials are not the correct'
+
+            ], 422);
         }
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $user = Auth::user();
+        $token = $user->createToken('main')->plainTextToken;
 
-        $response = [
+
+
+        return response([
+            'success' => "Successfully Logged in!",
             'user' => $user,
             'token' => $token
-        ];
-        return response()->json(['data' => $response, 'success' => "Successfully Logged in!"]);
+        ]);
     }
 
-
-    public function logout()
+    public function logout(Request $request)
     {
-        $this->guard()->logout();
+        $request->user()->currentAccessToken()->delete();
+
         return response()->json([
             'status' => 'success',
             'msg' => 'Logged out Successfully.'
+
         ], 200);
     }
+
     public function user(Request $request)
     {
         $user = User::find(Auth::user()->id);
@@ -78,16 +94,20 @@ class AuthController extends Controller
             'data' => $user
         ]);
     }
-    public function refresh()
-    {
-        /** @var TYPE_NAME $token */
-        if ($token = $this->guard()->refresh()) {
-            return response()
-                ->json(['status' => 'successs'], 200)
-                ->header('Authorization', $token);
-        }
-        return response()->json(['error' => 'refresh_token_error'], 401);
-    }
+
+
+
+
+    // public function refresh()
+    // {
+    //     /** @var TYPE_NAME $token */
+    //     if ($token = $this->guard()->refresh()) {
+    //         return response()
+    //             ->json(['status' => 'successs'], 200)
+    //             ->header('Authorization', $token);
+    //     }
+    //     return response()->json(['error' => 'refresh_token_error'], 401);
+    // }
 
     private function guard()
     {

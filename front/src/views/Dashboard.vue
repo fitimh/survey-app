@@ -14,7 +14,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            <div class="sidebar-brand-text mx-3">Survey App</div>
          </a>
 
          <!-- Divider -->
@@ -31,9 +31,6 @@
          <!-- Divider -->
          <hr class="sidebar-divider" />
 
-         <!-- Heading -->
-         <div class="sidebar-heading">Interface</div>
-
          <!-- Nav Item - Pages Collapse Menu -->
          <li class="nav-item">
             <a
@@ -45,20 +42,14 @@
                aria-controls="collapseTwo"
             >
                <i class="fas fa-fw fa-cog"></i>
-               <span>Components</span>
+               <span>Quize</span>
             </a>
             <div
                id="collapseTwo"
                class="collapse"
                aria-labelledby="headingTwo"
                data-parent="#accordionSidebar"
-            >
-               <div class="bg-white py-2 collapse-inner rounded">
-                  <h6 class="collapse-header">Custom Components:</h6>
-                  <a class="collapse-item" href="buttons.html">Buttons</a>
-                  <a class="collapse-item" href="cards.html">Cards</a>
-               </div>
-            </div>
+            ></div>
          </li>
 
          <!-- Nav Item - Utilities Collapse Menu -->
@@ -1018,12 +1009,12 @@
    <!-- End of Page Wrapper -->
 
    <!-- Scroll to Top Button-->
-   <a class="scroll-to-top rounded" href="#page-top">
+   <!-- <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
-   </a>
+   </a> -->
 
    <!-- Logout Modal-->
-   <div
+   <!-- <div
       class="modal fade"
       id="logoutModal"
       tabindex="-1"
@@ -1062,7 +1053,7 @@
             </div>
          </div>
       </div>
-   </div>
+   </div> -->
 </template>
 
 <style>
